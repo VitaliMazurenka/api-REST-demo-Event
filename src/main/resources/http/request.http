@@ -1,0 +1,14 @@
+### Get all events
+
+GET localhost:8080/events
+
+### Add event
+
+POST localhost:8080/events
+Content-Type: application/json
+
+{
+  "name": "New Year",
+  "description": "Worlwide",
+  "date": "2024-31-12"
+}

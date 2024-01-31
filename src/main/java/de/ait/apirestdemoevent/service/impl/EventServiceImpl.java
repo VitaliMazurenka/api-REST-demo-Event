@@ -11,19 +11,30 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+import static de.ait.apirestdemoevent.dto.EventDto.from;
+
 @RequiredArgsConstructor
+@Service
+
 public class EventServiceImpl implements EventService {
 
     @Autowired
     EventRepository eventRepository;
+
+
     @Override
     public List<EventDto> getAllEvents() {
-        return null;
+        return from(eventRepository.findAll());
     }
 
     @Override
-    public Event addEvent(NewEventDto newEvent) {
-        return null;
+    public EventDto addEvent(NewEventDto newEvent) {
+        Event event = Event.builder()
+                .name(newEvent.getName())
+                .description(newEvent.getDescription())
+                .date(newEvent.getDate())
+                .build();
+        eventRepository.save(event);
+        return from(event);
     }
 }

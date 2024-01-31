@@ -8,8 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 public interface EventService {
     List<EventDto> getAllEvents();
-    Event addEvent(NewEventDto newEvent);
+    EventDto addEvent(NewEventDto newEvent);
 }

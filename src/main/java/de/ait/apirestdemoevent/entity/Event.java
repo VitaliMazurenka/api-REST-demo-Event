@@ -10,7 +10,9 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode
+@Builder
 public class Event {
+   private Long id;
    private String name;
    private String description;
    private LocalDate date;

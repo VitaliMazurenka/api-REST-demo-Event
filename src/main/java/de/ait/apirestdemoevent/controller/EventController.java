@@ -3,11 +3,14 @@ package de.ait.apirestdemoevent.controller;
 import de.ait.apirestdemoevent.dto.EventDto;
 import de.ait.apirestdemoevent.dto.NewEventDto;
 import de.ait.apirestdemoevent.service.EventService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 
 import java.util.List;
 
@@ -15,23 +18,17 @@ import java.util.List;
 @AllArgsConstructor
 public class EventController {
     private final EventService eventService;
-    // методы для работы с пользователем (mvc)
-//
-    @PostMapping("/register")
-    public String addEvent(NewEventDto newEvent){
-        eventService.addEvent(newEvent);
-        return "redirect:/success_page.html";
+    @Operation(summary = "Get all events", description = "For admin only ")
+    @GetMapping("/events")
+    @ResponseBody
+    public List<EventDto> getAllUsers() {
+        return eventService.getAllEvents();
     }
 
-    @GetMapping("/home")
-    public String getHomePage(Model model){
-        return "redirect:home.html";
-    }
-    //
-    @GetMapping("/events")
-    public String getEventsPage(Model model){
-        List<EventDto> events = eventService.getAllEvents();
-        model.addAttribute("eventList", events); // связываем данные и их представление в шаблонизаторе
-        return "events_page";
+    @Operation(summary = "Add new event", description = "For Admin only")
+    @PostMapping("/events")
+    @ResponseBody
+    public EventDto add(@RequestBody NewEventDto newEvent) {
+        return eventService.addEvent(newEvent);
     }
 }
